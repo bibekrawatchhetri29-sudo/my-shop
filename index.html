@@ -3,127 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Shop</title>
+  <title>For My Babe</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, html {
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff99cc, #ff6699, #ff3366);
     }
 
-    header {
-      background: #333;
-      color: white;
-      padding: 15px;
+    /* Initial content */
+    #initialContent {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
     }
 
-    nav {
-      background: #555;
-      padding: 10px;
-      text-align: center;
-    }
-
-    nav a {
+    .overlay {
       color: white;
-      margin: 0 10px;
-      text-decoration: none;
+      font-size: 3em;
+      font-weight: bold;
+      text-shadow: 2px 2px 10px #ff6699;
+      animation: slideDown 2s ease-out forwards;
     }
 
-    .container {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+    @keyframes slideDown {
+      0% { transform: translateY(-200%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
-    .product {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .product img {
-      max-width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
-
-    button {
-      background: #28a745;
+    #showPhotoBtn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
       color: white;
+      background-color: #ff3366;
       border: none;
-      padding: 10px;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
+      transition: 0.3s;
     }
 
-    button:hover {
-      background: #218838;
+    #showPhotoBtn:hover { background-color: #ff6699; }
+
+    /* Full-screen photo */
+    #photoContainer {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 50%;
+      background-image: url('https://github.com/bibekrawatchhetri29-sudo/LOVE/blob/main/Screenshot%20(143).png?raw=true');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 2s ease-in;
     }
 
-    footer {
-      background: #333;
-      color: white;
+    /* Paragraph overlay */
+    #description {
+      position: absolute;
+      top: 10%;
+      width: 80%;
       text-align: center;
-      padding: 10px;
-      margin-top: 20px;
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow: 2px 2px 10px #ff3366;
+      opacity: 0;
+      line-height: 1.6em;
     }
+
+    @keyframes slideDownSlow {
+      0% { transform: translateY(-200%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(-45deg);
+      opacity: 0.7;
+      animation: float 6s infinite;
+    }
+
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: 10px; top: 0; }
+
+    @keyframes float {
+      0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { transform: translateX(calc(-200px + 400px*random())) translateY(-800px) rotate(-45deg); opacity: 0; }
+    }
+
   </style>
 </head>
 <body>
 
-<header>
-  <h1>My Online Shop</h1>
-  <p>Welcome to our store!</p>
-</header>
+  <div id="initialContent">
+    <div class="overlay">I LOVE YOU BABE</div>
+    <button id="showPhotoBtn">Click Here</button>
+  </div>
 
-<nav>
-  <a href="#">Home</a>
-  <a href="#">Products</a>
-  <a href="#">Contact</a>
-</nav>
+  <div id="photoContainer">
+    <div id="description">
+      You are truly amazing, not only because of your radiant beauty, but also because of the warmth and understanding in your heart. Every time I see your smile, it lights up my world, and your laughter brings joy that I could never imagine. Your kindness and patience make everyone around you feel cherished, and your thoughtfulness is a rare gift that I treasure every single day. I love how you see the good in everything and how your gentle nature comforts those in need. Being with you makes life feel brighter, happier, and more meaningful. You inspire me to be better, and I am endlessly grateful for your love, your care, and your incredible soul. You are my dream, my heart, my everything.
+    </div>
+  </div>
 
-<div class="container" id="product-list">
-</div>
+  <script>
+    const button = document.getElementById('showPhotoBtn');
+    const initialContent = document.getElementById('initialContent');
+    const photoContainer = document.getElementById('photoContainer');
+    const description = document.getElementById('description');
 
-<footer>
-  <p>© 2026 My Shop</p>
-</footer>
+    button.addEventListener('click', () => {
+      initialContent.style.display = 'none';
+      photoContainer.style.display = 'block';
+      setTimeout(() => { photoContainer.style.opacity = 1; }, 50);
+      description.style.animation = 'slideDownSlow 8s forwards';
 
-<script>
-const products = [
-  { 
-    name: "T-Shirt", 
-    price: 10, 
-    image: "https://images.unsplash.com/photo-1593032465173-3e3a6e5a0d83?auto=format&fit=crop&w=400&q=80" 
-  },
-  { name: "Shoes", price: 25, image: "https://via.placeholder.com/200" },
-  { name: "Watch", price: 50, image: "https://via.placeholder.com/200" }
-];
-
-  const productList = document.getElementById("product-list");
-
-  products.forEach(product => {
-    const div = document.createElement("div");
-    div.className = "product";
-
-    div.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>$${product.price}</p>
-      <button onclick="addToCart('${product.name}')">Add to Cart</button>
-    `;
-
-    productList.appendChild(div);
-  });
-
-  function addToCart(productName) {
-    alert(productName + " added to cart!");
-  }
-</script>
+      // Create floating hearts
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        heart.style.width = heart.style.height = (10 + Math.random()*20) + 'px';
+        photoContainer.appendChild(heart);
+      }
+    });
+  </script>
 
 </body>
 </html>
